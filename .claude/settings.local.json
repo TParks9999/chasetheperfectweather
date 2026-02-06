@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:open-meteo.com)",
+      "WebFetch(domain:dev.meteostat.net)",
+      "WebFetch(domain:download.geonames.org)",
+      "WebFetch(domain:simplemaps.com)",
+      "WebFetch(domain:www.visualcrossing.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.mapbox.com)",
+      "WebFetch(domain:bundlephobia.com)",
+      "Bash(where:*)",
+      "Bash(node --version:*)",
+      "Bash(npm:*)"
+    ]
+  }
+}
