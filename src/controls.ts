@@ -21,18 +21,29 @@ let onChange: FilterCallback | null = null;
 let sliderEl: NoUiTarget;
 let rainSliderEl: NoUiTarget;
 
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
 function loadState(): FilterState {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as Partial<FilterState>;
-      const tempMin = Number.isFinite(parsed.tempMin) ? parsed.tempMin! : 20;
-      const tempMax = Number.isFinite(parsed.tempMax) ? parsed.tempMax! : 30;
+      const tempMinRaw = Number.isFinite(parsed.tempMin) ? parsed.tempMin! : 20;
+      const tempMaxRaw = Number.isFinite(parsed.tempMax) ? parsed.tempMax! : 30;
+      let tempMin = clamp(tempMinRaw, -10, 40);
+      let tempMax = clamp(tempMaxRaw, -10, 40);
+      if (tempMin > tempMax) {
+        [tempMin, tempMax] = [tempMax, tempMin];
+      }
+      const monthRaw = Number.isFinite(parsed.month) ? parsed.month! : new Date().getMonth();
+      const maxRainRaw = Number.isFinite(parsed.maxRain) ? parsed.maxRain! : 200;
       return {
-        month: Number.isFinite(parsed.month) ? parsed.month! : new Date().getMonth(),
-        tempMin: Math.min(40, Math.max(-10, tempMin)),
-        tempMax: Math.min(40, Math.max(-10, tempMax)),
-        maxRain: Number.isFinite(parsed.maxRain) ? parsed.maxRain! : 200,
+        month: clamp(monthRaw, 0, 11),
+        tempMin,
+        tempMax,
+        maxRain: clamp(maxRainRaw, 0, 900),
         isFahrenheit: typeof parsed.isFahrenheit === 'boolean' ? parsed.isFahrenheit : false,
       };
     }
