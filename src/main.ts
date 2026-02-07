@@ -1,4 +1,4 @@
-import '../styles/main.css';
+﻿import '../styles/main.css';
 import { loadCities } from './data';
 import { initMap, addCities, updateMarkerColors, setMarkerClickHandler, panToCity, setupZoomHandler } from './map';
 import { initControls, getState, type FilterState } from './controls';
@@ -27,7 +27,7 @@ app.innerHTML = `
       <aside id="detail-panel" class="detail-panel">
         <div class="panel-header">
           <div class="panel-header-info"></div>
-          <button class="panel-close" aria-label="Close">×</button>
+          <button class="panel-close" aria-label="Close">&times;</button>
         </div>
         <div class="panel-body">
           <div class="chart-wrap">
@@ -38,13 +38,13 @@ app.innerHTML = `
     </div>
 
     <div class="legend">
-      <span class="legend-item"><span class="legend-dot too-hot"></span>Too hot 🥵</span>
-      <span class="legend-item"><span class="legend-dot too-cold"></span>Too cold 🥶</span>
-      <span class="legend-item"><span class="legend-dot in-range"></span>Just right 😎</span>
+      <span class="legend-item"><span class="legend-dot too-hot"></span>Too hot</span>
+      <span class="legend-item"><span class="legend-dot too-cold"></span>Too cold</span>
+      <span class="legend-item"><span class="legend-dot in-range"></span>Just right</span>
     </div>
 
     <div id="empty-banner" class="empty-banner">No cities match this filter. Try widening your temperature range.</div>
-    <div id="loading" class="loading">Loading cities…</div>
+    <div id="loading" class="loading">Loading cities...</div>
   </div>
 `;
 
@@ -88,3 +88,5 @@ async function boot() {
 }
 
 boot();
+
+

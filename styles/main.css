@@ -43,6 +43,8 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  position: relative;
+  z-index: 20;
 }
 
 .brand-title {
@@ -85,7 +87,7 @@ body {
   pointer-events: none;
   transform: translateY(-6px);
   transition: 160ms ease;
-  z-index: 5;
+  z-index: 30;
 }
 
 .search-results.open {
@@ -370,6 +372,7 @@ body {
   align-items: center;
   font-size: 0.9rem;
   color: var(--muted);
+  flex-wrap: wrap;
 }
 
 .legend-dot {
@@ -442,5 +445,112 @@ body {
 
   .detail-panel.open {
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    padding: 14px 14px 16px;
+    gap: 12px;
+  }
+
+  .brand-title {
+    font-size: 1.35rem;
+  }
+
+  .search-container {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .month-buttons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .month-btn {
+    flex: 0 0 auto;
+  }
+
+  .filters-section {
+    min-width: 0;
+  }
+
+  .temp-section {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label unit"
+      "min max"
+      "slider slider";
+    row-gap: 8px;
+  }
+
+  .temp-section .controls-label { grid-area: label; }
+  .temp-section .unit-toggle {
+    grid-area: unit;
+    margin-left: 0;
+    justify-self: end;
+  }
+  #temp-min-label { grid-area: min; justify-self: start; }
+  #temp-max-label { grid-area: max; justify-self: end; }
+  .temp-slider { grid-area: slider; }
+
+  .rain-section {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label value"
+      "slider slider";
+    row-gap: 8px;
+  }
+
+  .rain-section .controls-label { grid-area: label; }
+  #rain-max-label { grid-area: value; justify-self: end; }
+  .rain-slider { grid-area: slider; }
+
+  .map {
+    min-height: 50vh;
+  }
+
+  .detail-panel {
+    height: 45vh;
+    top: auto;
+    border-radius: 18px 18px 0 0;
+    padding-bottom: 20px;
+  }
+
+  .chart-wrap {
+    height: 200px;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand-title {
+    font-size: 1.2rem;
+  }
+
+  .controls {
+    padding: 10px 12px;
+  }
+
+  .month-btn {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  .legend {
+    font-size: 0.85rem;
+    gap: 10px;
+  }
+
+  .empty-banner {
+    top: 70px;
+    font-size: 0.85rem;
   }
 }

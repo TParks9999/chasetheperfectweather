@@ -13,6 +13,10 @@ dist-ssr
 *.local
 scripts/cache/
 Screenshot*.png
+data/raw/
+data/backups/
+.claude/
+screen captures/
 
 # Editor directories and files
 .vscode/*

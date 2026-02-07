@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "node scripts/validate-cities.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {

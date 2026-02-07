@@ -1,4 +1,4 @@
-import L from 'leaflet';
+﻿import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { City } from './data';
 
@@ -77,7 +77,7 @@ export function addCities(cities: City[]) {
     const rainMarker = L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: 'rain-drop-marker leaflet-div-icon',
-        html: '<span class="rain-drop">💧</span>',
+        html: '<span class="rain-drop">&#128167;</span>',
         iconSize: [16, 16],
         iconAnchor: [8, 8],
       }),
@@ -142,3 +142,5 @@ export function setupZoomHandler() {
     }
   });
 }
+
+
