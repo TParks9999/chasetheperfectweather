@@ -38,13 +38,14 @@ app.innerHTML = `
     </div>
 
     <div class="legend">
-      <span class="legend-item"><span class="legend-dot too-hot"></span>Too hot</span>
-      <span class="legend-item"><span class="legend-dot too-cold"></span>Too cold</span>
-      <span class="legend-item"><span class="legend-dot in-range"></span>Just right</span>
+      <span class="legend-item"><span class="legend-dot too-hot"></span>Too hot 🥵</span>
+      <span class="legend-item"><span class="legend-dot too-cold"></span>Too cold 🥶</span>
+      <span class="legend-item"><span class="legend-dot in-range"></span>Just right 😎</span>
     </div>
 
     <div id="empty-banner" class="empty-banner">No cities match this filter. Try widening your temperature range.</div>
     <div id="loading" class="loading">Loading cities...</div>
+    <div class="credit">Made by Tony Parks</div>
   </div>
 `;
 
