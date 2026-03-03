@@ -1,6 +1,22 @@
-﻿# Best Time to Travel
+# Best Time to Travel
 
 Web app to help pick the best time to visit a city using monthly climate normals.
+
+## Why I Built This
+I built this app because I wanted a fast, visual way to compare weather comfort across cities and plan trips around the conditions I personally enjoy most, instead of relying on scattered monthly climate tables.
+
+## Live App
+Hosted at: https://chasetheperfectweather.pages.dev/
+
+## App Preview
+Interactive world map with climate suitability markers, month filtering, and city-level climate charts.
+
+![Best Time to Travel app preview](docs/images/app-preview.png)
+
+## Responsive Experience
+- Optimized for desktop browsers with a full map-first layout and side detail panel.
+- Optimized for mobile browsers with touch-friendly controls, collapsible filters, and a bottom-sheet city detail view.
+- Designed to retain core functionality and visual clarity across both desktop and mobile.
 
 ## Tools & Tech
 - Vite (dev server + build).

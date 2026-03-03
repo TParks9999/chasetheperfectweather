@@ -20,6 +20,7 @@ body {
   margin: 0;
   font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
   color: var(--ink);
+  overflow-x: hidden;
   background: radial-gradient(1200px 600px at 20% -10%, #fef3c7 0%, transparent 60%),
               radial-gradient(900px 500px at 90% -5%, #d1fae5 0%, transparent 60%),
               var(--bg);
@@ -27,7 +28,8 @@ body {
 
 #app,
 .app-shell {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .app-shell {
@@ -36,6 +38,21 @@ body {
   gap: 16px;
   padding: 18px 20px 20px;
   position: relative;
+}
+
+.mobile-toolbar {
+  display: none;
+}
+
+.filters-toggle {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
 }
 
 .app-header {
@@ -126,6 +143,7 @@ body {
   box-shadow: var(--shadow);
   position: relative;
   z-index: 5;
+  overflow: hidden;
 }
 
 .controls-bar {
@@ -161,6 +179,9 @@ body {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .month-btn {
@@ -324,6 +345,10 @@ body {
   pointer-events: auto;
 }
 
+.panel-overlay {
+  display: none;
+}
+
 .panel-header {
   display: flex;
   justify-content: space-between;
@@ -438,6 +463,10 @@ body {
 }
 
 @media (max-width: 900px) {
+  body.panel-open {
+    overflow: hidden;
+  }
+
   .app-header {
     flex-direction: column;
     align-items: stretch;
@@ -448,16 +477,48 @@ body {
   }
 
   .detail-panel {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
+    width: auto;
+    position: fixed;
+    left: 12px;
+    right: 12px;
     bottom: 0;
-    transform: translateY(110%);
+    top: auto;
+    transform: translateY(112%);
+    height: 70dvh;
+    max-height: 70dvh;
+    border-radius: 18px 18px 0 0;
+    z-index: 1200;
   }
 
   .detail-panel.open {
     transform: translateY(0);
+  }
+
+  .panel-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.34);
+    opacity: 0;
+    pointer-events: none;
+    transition: 200ms ease;
+    z-index: 1100;
+    display: block;
+  }
+
+  .panel-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.panel-open .detail-panel {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.panel-open .panel-overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -481,11 +542,45 @@ body {
     align-items: stretch;
   }
 
+  .mobile-toolbar {
+    display: block;
+  }
+
+  .controls {
+    transition: max-height 220ms ease, opacity 220ms ease, padding 220ms ease;
+    transform-origin: top;
+  }
+
+  .controls.drawer-collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+  }
+
+  .controls.drawer-open {
+    max-height: 420px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .month-section {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
   .month-buttons {
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 4px;
     -webkit-overflow-scrolling: touch;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
   }
 
   .month-btn {
@@ -532,9 +627,8 @@ body {
   }
 
   .detail-panel {
-    height: 45vh;
-    top: auto;
-    border-radius: 18px 18px 0 0;
+    height: 70dvh;
+    max-height: 70dvh;
     padding-bottom: 20px;
   }
 
@@ -565,5 +659,13 @@ body {
   .empty-banner {
     top: 70px;
     font-size: 0.85rem;
+  }
+}
+
+@supports (padding: max(0px)) {
+  @media (max-width: 900px) {
+    .detail-panel {
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
   }
 }

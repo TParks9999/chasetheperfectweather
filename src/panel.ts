@@ -3,16 +3,27 @@ import { getCountryName, formatPopulation } from './data';
 import { renderChart, destroyChart } from './chart';
 
 let panelEl: HTMLElement;
+let overlayEl: HTMLElement | null = null;
 let currentCity: City | null = null;
 let onClose: (() => void) | null = null;
+
+function syncBodyPanelState(open: boolean) {
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    document.body.classList.toggle('panel-open', open);
+  } else {
+    document.body.classList.remove('panel-open');
+  }
+}
 
 export function initPanel(onCloseCallback?: () => void) {
   onClose = onCloseCallback || null;
 
   panelEl = document.getElementById('detail-panel')!;
+  overlayEl = document.getElementById('panel-overlay');
 
   // Close button
   panelEl.querySelector('.panel-close')!.addEventListener('click', closePanel);
+  overlayEl?.addEventListener('click', closePanel);
 
   // Close on escape key
   document.addEventListener('keydown', (e) => {
@@ -40,6 +51,8 @@ export function openPanel(
 
   // Show panel
   panelEl.classList.add('open');
+  overlayEl?.classList.add('open');
+  syncBodyPanelState(true);
 
   // Render chart after panel is open so the canvas has a real size
   const canvas = panelEl.querySelector('#city-chart') as HTMLCanvasElement;
@@ -62,6 +75,8 @@ export function updatePanelChart(
 
 export function closePanel() {
   panelEl.classList.remove('open');
+  overlayEl?.classList.remove('open');
+  syncBodyPanelState(false);
   destroyChart();
   currentCity = null;
   if (onClose) onClose();

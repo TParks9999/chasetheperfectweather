@@ -19,6 +19,18 @@ app.innerHTML = `
       </div>
     </header>
 
+    <div class="mobile-toolbar">
+      <button
+        id="filters-toggle"
+        class="filters-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="controls"
+      >
+        Filters
+      </button>
+    </div>
+
     <section id="controls" class="controls"></section>
 
     <div class="content">
@@ -37,6 +49,8 @@ app.innerHTML = `
       </aside>
     </div>
 
+    <div id="panel-overlay" class="panel-overlay" aria-hidden="true"></div>
+
     <div class="legend">
       <span class="legend-item"><span class="legend-dot too-hot"></span>Too hot 🥵</span>
       <span class="legend-item"><span class="legend-dot too-cold"></span>Too cold 🥶</span>
@@ -51,6 +65,26 @@ app.innerHTML = `
 
 const emptyBanner = document.getElementById('empty-banner')!;
 const loadingEl = document.getElementById('loading')!;
+const controlsEl = document.getElementById('controls') as HTMLElement;
+const filtersToggleBtn = document.getElementById('filters-toggle') as HTMLButtonElement;
+const mobileQuery = window.matchMedia('(max-width: 700px)');
+
+let mobileDrawerOpen = false;
+
+function applyDrawerState() {
+  const isMobile = mobileQuery.matches;
+  if (isMobile) {
+    filtersToggleBtn.hidden = false;
+    controlsEl.classList.toggle('drawer-open', mobileDrawerOpen);
+    controlsEl.classList.toggle('drawer-collapsed', !mobileDrawerOpen);
+    filtersToggleBtn.setAttribute('aria-expanded', mobileDrawerOpen ? 'true' : 'false');
+  } else {
+    filtersToggleBtn.hidden = true;
+    controlsEl.classList.remove('drawer-collapsed');
+    controlsEl.classList.add('drawer-open');
+    filtersToggleBtn.setAttribute('aria-expanded', 'true');
+  }
+}
 
 function applyFilters(state: FilterState) {
   const matches = updateMarkerColors(state.month, state.tempMin, state.tempMax, state.maxRain);
@@ -74,7 +108,21 @@ async function boot() {
       openPanel(city, state.month, state.tempMin, state.tempMax, state.isFahrenheit);
     });
 
-    initControls(document.getElementById('controls')!, applyFilters);
+    initControls(controlsEl, applyFilters);
+
+    filtersToggleBtn.addEventListener('click', () => {
+      mobileDrawerOpen = !mobileDrawerOpen;
+      applyDrawerState();
+    });
+
+    mobileQuery.addEventListener('change', () => {
+      if (!mobileQuery.matches) {
+        mobileDrawerOpen = false;
+      }
+      applyDrawerState();
+    });
+    applyDrawerState();
+
     initSearch(cities, (city) => {
       panToCity(city);
       const state = getState();
