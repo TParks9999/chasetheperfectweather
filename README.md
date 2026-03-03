@@ -11,7 +11,7 @@ Hosted at: https://chasetheperfectweather.pages.dev/
 ## App Preview
 Interactive world map with climate suitability markers, month filtering, and city-level climate charts.
 
-![Best Time to Travel app preview](docs/images/app-preview.png)
+![Best Time to Travel app preview](docs/Image.png)
 
 ## Responsive Experience
 - Optimized for desktop browsers with a full map-first layout and side detail panel.
